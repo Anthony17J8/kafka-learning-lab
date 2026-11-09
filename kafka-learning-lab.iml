@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/architecture-lab" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/messaging-models-lab" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/messaging-tradeoffs-lab" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/module-2/partitioning-ordering-lab" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/module-2/replication-visibility-lab" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/module-2/segmented-log-lab" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/module-2/sparse-index-lab" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/partitioning-lab" isTestSource="false" />
