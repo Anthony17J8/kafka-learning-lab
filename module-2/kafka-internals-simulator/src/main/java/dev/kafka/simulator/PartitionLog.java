@@ -121,4 +121,8 @@ public class PartitionLog {
     public List<LogSegment> segments() {
         return List.copyOf(segments);
     }
+
+    public int getPartitionId() {
+        return partitionId;
+    }
 }
