@@ -12,7 +12,8 @@ public class LogSegment {
     private record StoredRecord(
             SimRecord record,
             int bytePosition,
-            int sizeBytes) {
+            int sizeBytes,
+            long timestampMs) {
     }
 
     private final long baseOffset;
@@ -24,6 +25,7 @@ public class LogSegment {
 
     private int bytesWritten = 0;
     private int lastIndexedPosition = 0;
+    private long maxTimestampMs = -1;
 
     public LogSegment(long baseOffset) {
         this(baseOffset, DEFAULT_INDEX_INTERVAL_BYTES);
@@ -40,6 +42,10 @@ public class LogSegment {
 
     public long baseOffset() {
         return baseOffset;
+    }
+
+    public long maxTimestampMs() {
+        return maxTimestampMs;
     }
 
     public int size() {
@@ -66,6 +72,14 @@ public class LogSegment {
     }
 
     void append(SimRecord record) {
+        append(record, System.currentTimeMillis());
+    }
+
+    void append(SimRecord record, long timestampMs) {
+        if (timestampMs < 0) {
+            throw new IllegalArgumentException("timestampMs cannot be < 0");
+        }
+
         validateRecord(record);
 
         // Определить текущую bytePosition:
@@ -90,8 +104,9 @@ public class LogSegment {
         }
 
         // Добавить StoredRecord.
-        StoredRecord storedRecord = new StoredRecord(record, bytePosition, sizeBytes);
+        StoredRecord storedRecord = new StoredRecord(record, bytePosition, sizeBytes, timestampMs);
         storedRecords.add(storedRecord);
+        this.maxTimestampMs = Math.max(timestampMs, maxTimestampMs);
 
         // Увеличить bytesWritten на sizeBytes.
         // Желательно использовать Math.addExact().
